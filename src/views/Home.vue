@@ -5,6 +5,10 @@
         <ion-title>Blank</ion-title>
       </ion-toolbar>
     </ion-header>
+    <ion-button/>
+    <ion-row/>
+    <ion-col/>
+    <ion-grid/>
     
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
@@ -21,8 +25,8 @@
   </ion-page>
 </template>
 
-<script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+<script>
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonRow, IonCol, IonGrid} from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -32,7 +36,11 @@ export default defineComponent({
     IonHeader,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    IonButton, 
+    IonRow, 
+    IonCol, 
+    IonGrid,
   }
 });
 </script>
