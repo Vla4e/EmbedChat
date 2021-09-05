@@ -6,11 +6,14 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true" class="ion-padding-vertical">
+    <ion-content fullscreen>
       <ion-grid>
           <ion-row :key="index" v-for="(msg, index) of messages">
-            <ion-col size="9">
-              <div  text="msg.msgText" style="border:2px solid black"></div>
+            <ion-col class="chatBoxM ion-padding" v-if="msg.isMine===true" size="6">
+              <span> {{msg.msgText}} </span>
+            </ion-col>
+            <ion-col class="chatBoxO ion-padding" size="6" offset="6"  v-else >
+              <span> {{msg.msgText}} </span>
             </ion-col>
           </ion-row> 
       </ion-grid>
@@ -53,8 +56,27 @@ export default defineComponent({
       message:{
         msgText: "",
         timesent: "",
+        isMine: false,
       },
-      messages: [],
+      messages: [
+          {
+          msgText: "Don't talk to me...",
+          timesent: "",
+          isMine: false,
+        },
+          {
+          msgText: "I thought we were over this.",
+          timesent: "",
+          isMine: false,
+        },
+          {
+          msgText: "I don't know, I'm not feeling you.",
+          timesent: "",
+          isMine: false,
+        }
+      ],
+
+      receivedMessages: [],
 
     }
 
@@ -71,18 +93,30 @@ export default defineComponent({
 
     sendMessage(){
       this.getNow();
-      this.messages.unshift({...this.message})
-      console.log(this.message)
-      console.log(this.messages)
+      this.message.isMine = true;
+
+      this.messages.push({...this.message})
+
       this.message.msgText = "";
-      console.log(this.message)
-      console.log(this.messages)
+      this.message.isMine = false;
     }
   }
 });
 </script>
 
 <style scoped>
+.chatBoxM {
+  border-radius: 10px;
+  background: #6ecd87;
+  margin: 5px;
+}
+.chatBoxO {
+  border-radius: 10px;
+  background: #fcf953;
+  margin: 5px;
+  
+}
+
 #container {
   text-align: center;
   
