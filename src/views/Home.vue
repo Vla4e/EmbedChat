@@ -5,15 +5,13 @@
         <ion-title>ChatEmbed</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-row/>
-    <ion-col/>
-    <ion-grid/>
-    <ion-button/>
-    
-    <ion-content :fullscreen="true">
+
+    <ion-content :fullscreen="true" class="ion-padding-vertical">
       <ion-grid>
           <ion-row :key="index" v-for="(msg, index) of messages">
-            <ion-col :text="msg.msgText"/>
+            <ion-col size="9">
+              <div  text="msg.msgText" style="border:2px solid black"></div>
+            </ion-col>
           </ion-row> 
       </ion-grid>
     </ion-content>
@@ -73,10 +71,12 @@ export default defineComponent({
 
     sendMessage(){
       this.getNow();
-      this.messages.unshift(this.message)
+      this.messages.unshift({...this.message})
       console.log(this.message)
       console.log(this.messages)
       this.message.msgText = "";
+      console.log(this.message)
+      console.log(this.messages)
     }
   }
 });
