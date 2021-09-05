@@ -2,31 +2,34 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        <ion-title>ChatEmbed</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-button/>
     <ion-row/>
     <ion-col/>
     <ion-grid/>
+    <ion-button/>
     
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
-      </ion-header>
-    
-      <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-      </div>
+      <ion-grid>
+          <ion-row :key="index" v-for="(msg, index) of messages">
+            <ion-col :text="msg.msgText"/>
+          </ion-row> 
+      </ion-grid>
     </ion-content>
+
+    <ion-footer>
+      <ion-item>
+          <ion-label>Type Something:</ion-label>
+          <ion-input v-model="message.msgText" clear-on-edit="true"></ion-input>
+          <ion-button text="Send" @click="sendMessage()"/>
+      </ion-item>
+    </ion-footer>
   </ion-page>
 </template>
 
 <script>
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonRow, IonCol, IonGrid} from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonRow, IonCol, IonGrid, IonFooter, IonInput, IonLabel, IonItem} from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -34,6 +37,7 @@ export default defineComponent({
   components: {
     IonContent,
     IonHeader,
+    IonFooter,
     IonPage,
     IonTitle,
     IonToolbar,
@@ -41,6 +45,39 @@ export default defineComponent({
     IonRow, 
     IonCol, 
     IonGrid,
+    IonInput, 
+    IonLabel, 
+    IonItem
+  },
+  data(){
+    return {
+
+      message:{
+        msgText: "",
+        timesent: "",
+      },
+      messages: [],
+
+    }
+
+  },
+  methods: {
+     getNow() {
+                    const today = new Date();
+                    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                    const dateTime = date +' '+ time;
+                    this.timestamp = dateTime;
+                    this.message.timesent = time;
+    },
+
+    sendMessage(){
+      this.getNow();
+      this.messages.unshift(this.message)
+      console.log(this.message)
+      console.log(this.messages)
+      this.message.msgText = "";
+    }
   }
 });
 </script>
