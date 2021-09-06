@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
+import singleChat from '../views/singleChat.vue'
 import Home from '../views/Home.vue'
-import chatList from '../views/chatList.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -9,14 +9,14 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/home'
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: Home
+    path: '/Home',
+    name: 'Chat List',
+    component: Home,
   },
   {
-    path:'/chatList',
-    name: "ChatList",
-    component: chatList
+    path:'/singleChat',
+    name: "Open Chat",
+    component: singleChat,
   },
 ]
 

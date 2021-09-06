@@ -1,151 +1,102 @@
 <template>
-  <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-title>ChatEmbed</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <ion-page>
 
-    <ion-content fullscreen>
-      <ion-grid>
-          <ion-row :key="index" v-for="(msg, index) of messages">
-            <ion-col class="chatBoxM ion-padding" v-if="msg.isMine===true" size="auto">
-              <span> {{msg.msgText}} </span>
-            </ion-col>
-            <ion-col class="chatBoxO ion-padding" size="6" offset="6" v-else >
-              <span> {{msg.msgText}} </span>
-            </ion-col>
-          </ion-row> 
-      </ion-grid>
-    </ion-content>
+        <ion-header :translucent="true">
+            <ion-toolbar>
+                <ion-title>Chat List</ion-title>
+            </ion-toolbar>
+        </ion-header>
 
-    <ion-footer>
-      <ion-item>
-          <ion-label>Type Something:</ion-label>
-          <ion-input v-model="message.msgText" v-on:keyup.enter="sendMessage()"></ion-input>
-          <ion-button text="Send" @click="sendMessage()"/>
-      </ion-item>
-    </ion-footer>
-  </ion-page>
+        <ion-content fullscreen>
+            <ion-list :key="index" v-for="(user, index) of users">
+                <ion-item button @click="openChat()">
+                    <ion-avatar>
+                        <img :src="user.imgSrc"/>
+                    </ion-avatar>
+                    <ion-label>
+                        <h2 class="previewPadding">{{user.name}}.</h2>
+                        <p class="previewPadding">{{user.lastMsg}}</p>
+                        <div class="ion-text-right"> {{user.lastMsgDate}} </div>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-page>
 </template>
 
 <script>
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonRow, IonCol, IonGrid, IonFooter, IonInput, IonLabel, IonItem} from '@ionic/vue';
+import {
+  IonItem, 
+  IonList, 
+  IonLabel, 
+  IonPage,
+  IonHeader,
+  IonTitle,
+  IonContent,
+  IonToolbar,
+  IonAvatar,
+} from '@ionic/vue';
 import { defineComponent } from 'vue';
+import singleChat from './singleChat.vue'
 
 export default defineComponent({
-  name: 'Home',
-  components: {
-    IonContent,
-    IonHeader,
-    IonFooter,
+  components: { 
+    IonItem, 
+    IonList, 
+    IonLabel,
     IonPage,
+    IonHeader,
     IonTitle,
+    IonContent,
     IonToolbar,
-    IonButton, 
-    IonRow, 
-    IonCol, 
-    IonGrid,
-    IonInput, 
-    IonLabel, 
-    IonItem
+    IonAvatar, 
   },
   data(){
-    return {
+      return{
+          user: {
+              name: "",
+              lastMsg: "",
+              lastMsgDate: "",
+              userId: "",
+              imgSrc: ""
+          },
 
-      message:{
-        msgText: "",
-        timesent: "",
-        isMine: false,
-      },
-      messages: [
-          {
-          msgText: "Don't talk to me...",
-          timesent: "",
-          isMine: false,
-        },
-          {
-          msgText: "I thought we were over this.",
-          timesent: "",
-          isMine: false,
-        },
-          {
-          msgText: "Ok.",
-          timesent: "",
-          isMine: false,
-        }
-      ],
-
-      receivedMessages: [],
-
-    }
-
+          users: [
+              {
+                  name:"John Doe",
+                  lastMsg: "How's it going?",
+                  lastMsgDate: "15:32 09-06",
+                  userId: "1",
+                  imgSrc: "https://scontent.fskp4-2.fna.fbcdn.net/v/t1.6435-9/32423147_10215019330493452_8152434753484619776_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=Zyu4CyCa19EAX-7_LDV&_nc_ht=scontent.fskp4-2.fna&oh=6d6354dfb343c2a744571f57c272673e&oe=615B2236"
+              },
+                {
+                  name:"Simono",
+                  lastMsg: "Parinjata evegi",
+                  lastMsgDate: "11:05 14-09",
+                  userId: "2",
+                  imgSrc: "https://scontent.fskp4-2.fna.fbcdn.net/v/t1.6435-9/159302403_5575452219139291_682073374859984510_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=DDt4RtyB4T4AX9fRDZV&_nc_oc=AQmCcRblvDEZVNu9Hz7HcsKRjWZWCJjxwefZqqFeq25bSARFvcG1dP3mk0JQVorhfP0&_nc_ht=scontent.fskp4-2.fna&oh=ee5846dd3e81c6fa0da7e418b9499690&oe=615D2A8F"
+              },
+                {
+                  name:"Musi",
+                  lastMsg: "kafz??",
+                  lastMsgDate: "18:49 27-08",
+                  userId: "3",
+                  imgSrc: "https://scontent.fskp4-1.fna.fbcdn.net/v/t1.6435-9/123245026_3692870344059454_3730946017904286054_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=L4X1W1_Y2H8AX-VIgj6&_nc_ht=scontent.fskp4-1.fna&oh=10ef48f4c3fc686a1645cc82b2a126f8&oe=615CE5C2"
+              },
+          ],
+      }
   },
   methods: {
-     getNow() {
-                    const today = new Date();
-                    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                    const dateTime = date +' '+ time;
-                    this.timestamp = dateTime;
-                    this.message.timesent = time;
+      
+    openChat(){
+        this.$navigateTo(singleChat)
     },
-
-    sendMessage(){
-      this.getNow();
-      this.message.isMine = true;
-
-      this.messages.push({...this.message})
-
-      this.message.msgText = "";
-      this.message.isMine = false;
-    }
-  }
+  },
 });
 </script>
 
 <style scoped>
-.gridMargin{
-  margin-right: 10px;
-}
-.chatBoxM {
-  white-space: pre-wrap;
-  border-radius: 10px;
-  background: #6ecd87;
-  margin: 5px;
-}
-.chatBoxO {
-  border-radius: 10px;
-  background: #fcf953;
-  margin: 5px;
-  
-}
-
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+.previewPadding{
+    padding-left:5px;
 }
 </style>
