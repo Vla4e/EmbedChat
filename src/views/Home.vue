@@ -9,10 +9,10 @@
     <ion-content fullscreen>
       <ion-grid>
           <ion-row :key="index" v-for="(msg, index) of messages">
-            <ion-col class="chatBoxM ion-padding" v-if="msg.isMine===true" size="6">
+            <ion-col class="chatBoxM ion-padding" v-if="msg.isMine===true" size="auto">
               <span> {{msg.msgText}} </span>
             </ion-col>
-            <ion-col class="chatBoxO ion-padding" size="6" offset="6"  v-else >
+            <ion-col class="chatBoxO ion-padding" size="6" offset="6" v-else >
               <span> {{msg.msgText}} </span>
             </ion-col>
           </ion-row> 
@@ -22,7 +22,7 @@
     <ion-footer>
       <ion-item>
           <ion-label>Type Something:</ion-label>
-          <ion-input v-model="message.msgText" clear-on-edit="true"></ion-input>
+          <ion-input v-model="message.msgText" v-on:keyup.enter="sendMessage()"></ion-input>
           <ion-button text="Send" @click="sendMessage()"/>
       </ion-item>
     </ion-footer>
@@ -70,7 +70,7 @@ export default defineComponent({
           isMine: false,
         },
           {
-          msgText: "I don't know, I'm not feeling you.",
+          msgText: "Ok.",
           timesent: "",
           isMine: false,
         }
@@ -105,7 +105,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.gridMargin{
+  margin-right: 10px;
+}
 .chatBoxM {
+  white-space: pre-wrap;
   border-radius: 10px;
   background: #6ecd87;
   margin: 5px;
