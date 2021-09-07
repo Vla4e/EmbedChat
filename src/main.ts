@@ -23,9 +23,17 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import { format } from 'date-fns'
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
+
+app.config.globalProperties.$filters = {
+  formatDate(value: any) {
+    return format(new Date(value), 'HH:mm')
+  }
+}
   
 router.isReady().then(() => {
   app.mount('#app');

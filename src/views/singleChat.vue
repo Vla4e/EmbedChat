@@ -8,16 +8,13 @@
 
     <ion-content fullscreen>
       <ion-grid :key="index" v-for="(msg, index) of user.userMessages">
-          <ion-row v-if="msg.isMine===true">
-            <ion-col class="chatBoxM ion-padding"  size="auto">
+          <ion-row :class="{ 'ion-justify-content-end': msg.isMine }">
+            <ion-col class="ion-padding" size="auto" :class="{ 'chatBoxM': msg.isMine, 'chatBoxO': !msg.isMine }">
               <span> {{msg.msgText}} </span>
+              <br>
+              <div :class="{ 'ion-text-right': msg.isMine }"> {{ $filters.formatDate(msg.timesent)}} </div>
             </ion-col>
           </ion-row>
-          <ion-row v-else class="ion-justify-content-end">
-            <ion-col class="chatBoxO ion-padding" size="auto">
-              <span> {{msg.msgText}} </span>
-            </ion-col>
-          </ion-row> 
       </ion-grid>
     </ion-content>
 
@@ -34,6 +31,7 @@
 <script>
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonRow, IonCol, IonGrid, IonFooter, IonInput, IonLabel, IonItem} from '@ionic/vue';
 import { defineComponent } from 'vue';
+import api from '@/services/api'
 
 export default defineComponent({
   name: 'Home',
@@ -52,12 +50,15 @@ export default defineComponent({
     IonLabel, 
     IonItem
   },
-  props: {
-    id: String,
-  },
 
-  created(){
-    this.getChat();
+  async created() {
+    try {
+      const userBase = await api.getUserBase()
+      this.userBase = JSON.parse(JSON.stringify(userBase))
+      this.getChat();
+    } catch(e) {
+      console.error('pls show err notif')
+    }
   },
 
   data(){
@@ -65,7 +66,6 @@ export default defineComponent({
 
       message:{
         msgText: "",
-        timesent: "",
         isMine: false,
       },
 
@@ -74,109 +74,37 @@ export default defineComponent({
         userMessages: [],
       },
 
-      userBase: [
-        {
-          userId: "1",
-          userMessages: [{
-              msgText: "Anarhist sum znaese??",
-              timesent: "",
-              isMine: false,
-            },
-              {
-              msgText: "Srcka coek voedno.",
-              timesent: "",
-              isMine: false,
-            },
-              {
-              msgText: "Inter best team serie A :pp",
-              timesent: "",
-              isMine: false,
-            }],
-        },
-        {
-          userId: "2",
-          userMessages: [{
-              msgText: "Che si pushta od sransvo??",
-              timesent: "",
-              isMine: false,
-            },
-              {
-              msgText: "Soerabotata?",
-              timesent: "",
-              isMine: false,
-            },
-              {
-              msgText: "Imali problem??",
-              timesent: "",
-              isMine: false,
-            }],
-        },
-        {
-          userId: "3",
-          userMessages: [{
-              msgText: "Kafz bro?",
-              timesent: "",
-              isMine: false,
-            },
-              {
-              msgText: "Boooo",
-              timesent: "",
-              isMine: false,
-            },
-              {
-              msgText: "Hehence",
-              timesent: "",
-              isMine: false,
-            }],
-        },
-      ],
-
+      userBase: [],
       receivedMessages: [],
-
     }
-
   },
   methods: {
-     getNow() {
-                    const today = new Date();
-                    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                    const dateTime = date +' '+ time;
-                    this.timestamp = dateTime;
-                    this.message.timesent = time;
-    },
-
-    sendMessage(){
-      this.getNow();
+    async sendMessage(){
       this.message.isMine = true;
-
-      this.user.userMessages.push({...this.message})
+      const sentmsg = await api.sendNewMsg(this.message, this.user.userId)
+      this.user.userMessages.push(sentmsg)
 
       this.message.msgText = "";
       this.message.isMine = false;
     },
 
     getChat(){
-      this.user = this.userBase.find( user => user.userId === this.id)
+      this.user = this.userBase.find( user => user.userId === this.$route.params.id)
     }
-  },
-
+  }
 });
 </script>
 
 <style scoped>
-.gridMargin{
-  margin-right: 10px;
-}
 .chatBoxM {
   white-space: pre-wrap;
   border-radius: 10px;
-  background: #6ecd87;
+  background: #367747;
   margin: 5px;
 }
 .chatBoxO {
   border-radius: 10px;
-  background: #fcf953;
+  background: #8d8c3a;
   margin: 5px;
   
 }

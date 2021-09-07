@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path:'/open-chat',
+    path:'/open-chat/:id',
     name: "Open Chat",
     component: singleChat,
   },
