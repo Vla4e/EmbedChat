@@ -9,12 +9,12 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/home'
   },
   {
-    path: '/Home',
+    path: '/home',
     name: 'Chat List',
     component: Home,
   },
   {
-    path:'/singleChat',
+    path:'/open-chat/:id',
     name: "Open Chat",
     component: singleChat,
   },

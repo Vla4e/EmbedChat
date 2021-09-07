@@ -9,7 +9,7 @@
 
         <ion-content fullscreen>
             <ion-list :key="index" v-for="(user, index) of users">
-                <ion-item button @click="openChat()">
+                <ion-item button :router-link="`/open-chat/${user.userId}`">
                     <ion-avatar>
                         <img :src="user.imgSrc"/>
                     </ion-avatar>
@@ -86,12 +86,9 @@ export default defineComponent({
           ],
       }
   },
-  methods: {
-      
-    openChat(){
-        this.$navigateTo(singleChat)
-    },
-  },
+//   methods: {
+
+//   },
 });
 </script>
 
