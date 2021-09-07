@@ -7,7 +7,7 @@
     </ion-header>
 
     <ion-content fullscreen>
-      <ion-grid :key="index" v-for="(msg, index) of messages">
+      <ion-grid :key="index" v-for="(msg, index) of user.userMessages">
           <ion-row v-if="msg.isMine===true">
             <ion-col class="chatBoxM ion-padding"  size="auto">
               <span> {{msg.msgText}} </span>
@@ -52,6 +52,14 @@ export default defineComponent({
     IonLabel, 
     IonItem
   },
+  props: {
+    id: String,
+  },
+
+  created(){
+    this.getChat();
+  },
+
   data(){
     return {
 
@@ -60,22 +68,67 @@ export default defineComponent({
         timesent: "",
         isMine: false,
       },
-      messages: [
-          {
-          msgText: "Don't talk to me...",
-          timesent: "",
-          isMine: false,
+
+      user: {
+        userId: "",
+        userMessages: [],
+      },
+
+      userBase: [
+        {
+          userId: "1",
+          userMessages: [{
+              msgText: "Anarhist sum znaese??",
+              timesent: "",
+              isMine: false,
+            },
+              {
+              msgText: "Srcka coek voedno.",
+              timesent: "",
+              isMine: false,
+            },
+              {
+              msgText: "Inter best team serie A :pp",
+              timesent: "",
+              isMine: false,
+            }],
         },
-          {
-          msgText: "I thought we were over this.",
-          timesent: "",
-          isMine: false,
+        {
+          userId: "2",
+          userMessages: [{
+              msgText: "Che si pushta od sransvo??",
+              timesent: "",
+              isMine: false,
+            },
+              {
+              msgText: "Soerabotata?",
+              timesent: "",
+              isMine: false,
+            },
+              {
+              msgText: "Imali problem??",
+              timesent: "",
+              isMine: false,
+            }],
         },
-          {
-          msgText: "Ok.",
-          timesent: "",
-          isMine: false,
-        }
+        {
+          userId: "3",
+          userMessages: [{
+              msgText: "Kafz bro?",
+              timesent: "",
+              isMine: false,
+            },
+              {
+              msgText: "Boooo",
+              timesent: "",
+              isMine: false,
+            },
+              {
+              msgText: "Hehence",
+              timesent: "",
+              isMine: false,
+            }],
+        },
       ],
 
       receivedMessages: [],
@@ -97,12 +150,17 @@ export default defineComponent({
       this.getNow();
       this.message.isMine = true;
 
-      this.messages.push({...this.message})
+      this.user.userMessages.push({...this.message})
 
       this.message.msgText = "";
       this.message.isMine = false;
+    },
+
+    getChat(){
+      this.user = this.userBase.find( user => user.userId === this.id)
     }
   },
+
 });
 </script>
 
