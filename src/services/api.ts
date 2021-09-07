@@ -59,13 +59,17 @@ const getUserBase = () => {
   return Promise.resolve(userBase)
 }
 
-const sendNewMsg = (msg, userId) => {
+const sendNewMsg = (msg: any, userId: any) => {
   const apiMsg = {
     ...msg,
     timesent: new Date().toISOString()
   }
-  userBase.find(user => user.userId === userId).userMessages.push(apiMsg)
-  return Promise.resolve(apiMsg)
+  const user = userBase.find(user => user.userId === userId)
+  if (user) {
+    user.userMessages.push(apiMsg)
+    return Promise.resolve(apiMsg)
+  }
+  return Promise.reject({ statusCode: 404 })
 }
 
 export default {
