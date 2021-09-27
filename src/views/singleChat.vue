@@ -99,12 +99,12 @@ export default defineComponent({
 .chatBoxM {
   white-space: pre-wrap;
   border-radius: 10px;
-  background: #367747;
+  background: #138808;
   margin: 5px;
 }
 .chatBoxO {
   border-radius: 10px;
-  background: #8d8c3a;
+  background: #FF9933;
   margin: 5px;
   
 }

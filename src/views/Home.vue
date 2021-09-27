@@ -71,7 +71,7 @@ export default defineComponent({
               },
                 {
                   name:"Simono",
-                  lastMsg: "Parinjata evegi",
+                  lastMsg: "U up for something?",
                   lastMsgDate: "11:05 14-09",
                   userId: "2",
                   imgSrc: "https://scontent.fskp4-2.fna.fbcdn.net/v/t1.6435-9/159302403_5575452219139291_682073374859984510_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=DDt4RtyB4T4AX9fRDZV&_nc_oc=AQmCcRblvDEZVNu9Hz7HcsKRjWZWCJjxwefZqqFeq25bSARFvcG1dP3mk0JQVorhfP0&_nc_ht=scontent.fskp4-2.fna&oh=ee5846dd3e81c6fa0da7e418b9499690&oe=615D2A8F"
