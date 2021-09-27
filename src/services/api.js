@@ -20,12 +20,12 @@ const userBase = [
   {
     userId: "2",
     userMessages: [{
-        msgText: "Che si pushta od sransvo??",
+        msgText: "Treba lorem ipsum ovde.",
         timesent: new Date().toISOString(),
         isMine: false,
       },
         {
-        msgText: "Soerabotata?",
+        msgText: "Ama ionaka ne razbiram latinski pa shojma vrska...",
         timesent: new Date().toISOString(),
         isMine: false,
       },
